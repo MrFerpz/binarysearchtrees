@@ -13,6 +13,16 @@ class Tree {
 
         if (array.length >= 1) {
 
+        // remove dupes
+        array = [...new Set(array)];
+
+        // sort into numerical order
+        array.sort(function(a, b) {
+            return a - b;
+        });
+
+        end = array.length - 1;
+
         let mid = Math.floor((start + end) / 2);
         let left = array.slice(0, mid);
         console.log(left);
@@ -31,8 +41,8 @@ class Tree {
 }
 }
 
-let test = new Tree([0,1,2,3,4,5,6]);
-test.buildTree(test.array);
+// let test = new Tree([0,1,2,3,4,5,6]);
+// test.buildTree(test.array);
 
 let test2 = new Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]);
-test.buildTree(test2.array);
+test2.buildTree(test2.array);
