@@ -9,23 +9,30 @@ class Tree {
         this.array = array;
     }
 
-    buildTree(array) {
-        let start = 0;
-        let end = array.length - 1;
-        let mid = (start + end) / 2;
+    buildTree(array, start = 0, end = array.length - 1) {
 
-        if (start > end) {
-            return null
-        }
+        if (array.length >= 1) {
+
+        let mid = Math.floor((start + end) / 2);
+        let left = array.slice(0, mid);
+        console.log(left);
+        let right = array.slice(mid + 1, end + 1);
+        console.log(right);
 
         let root = new Node(array[mid]);
-        root.leftChild = buildTree(this.left);
-        root.rightChild = buildTree(this.right);
-
         console.log(root);
+
+        root.leftChild = this.buildTree(left, 0, left.length - 1);
+        root.rightChild = this.buildTree(right, 0, right.length - 1);
+
         return root
-    }
+
+    } else return null;
+}
 }
 
-let test = new Tree([0,1,2,3,4,5]);
-test.buildTree(test);
+let test = new Tree([0,1,2,3,4,5,6]);
+test.buildTree(test.array);
+
+let test2 = new Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]);
+test.buildTree(test2.array);
