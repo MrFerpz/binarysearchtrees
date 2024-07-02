@@ -2,6 +2,8 @@
 class Node {
     constructor(data, leftChild = null, rightChild = null) {
         this.data = data;
+        this.leftChild = leftChild;
+        this.rightChild = rightChild;
     }
 }
 
@@ -85,45 +87,46 @@ insert(value) {
     }
 }
 
-    deleteItem(node = this.root, value) {
-        // we're gonna do a recursive function
-        
+    deleteItem(value, node = this.root) {
+        if (node === null) return node;
 
-        if (node === value) {
-            // the actual deletion method once we've found the value
-            // case 1 of no children - easy remove
+        // we're gonna do a recursive function
+        if (value < node.data) {
+            node.leftChild = this.deleteItem(value, node.leftChild)
+        } else if (value > node.data) {
+            node.rightChild = this.deleteItem(value, node.rightChild);
+        } else {
+            // found the node 
             if (node.leftChild === null && node.rightChild === null) {
-                node.data = null
-                return node;
+                return null;
             }
             // case 2 of one child - replace with its child
-            else if (node.leftChild === null && node.rightChild === true) {
-                node.data = node.rightChild;
-                node.rightChild = null;
-                return node;
+           if (node.leftChild === null && node.rightChild !== null) {
+                return node.rightChild;
+           } else if (node.rightChild === null) {
+                return node.leftChild;
             }
-            else if (node.rightChild === null && node.leftChild === true) {
-                node.data = node.leftChild;
-                node.leftChild = null;
-                return node
-            }
+
             // case 3 of two children - replace with next largest (right > left > left > left...)
-            else if (node.rightChild === true && node.leftChild === true) {
+            if (node.rightChild !== null && node.leftChild !== null) {
                 let current = node;
                 current = node.rightChild;
                 while(current.leftChild !== null) {
                     current = current.leftChild;
                 }
-                node = current;
-                current = null;
+                node.data = current.data;
                 return node;
-            }}
-        }
+            }
+    }
 }
+}
+
 // let test = new Tree([0,1,2,3,4,5,6]);
 // test.buildTree(test.array);
 
 let test2 = new Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]);
 test2.initialiseTree();
 test2.insert(6);
+console.log(test2);
+test2.deleteItem(6);
 console.log(test2);
