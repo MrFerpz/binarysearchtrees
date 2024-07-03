@@ -12,6 +12,7 @@ class Tree {
     constructor(array) {
         this.array = array;
         this.root = null;
+        this.inOrderArray = [];
     }
 
     // using the input array and defining two numbers for the start and end
@@ -87,39 +88,69 @@ insert(value) {
     }
 }
 
-    deleteItem(value, node = this.root) {
-        if (node === null) return node;
+deleteItem(value, node = this.root) {
+    if (node === null) return node; // Base case: if the node is null, return null
 
-        // we're gonna do a recursive function
-        if (value < node.data) {
-            node.leftChild = this.deleteItem(value, node.leftChild)
-        } else if (value > node.data) {
-            node.rightChild = this.deleteItem(value, node.rightChild);
-        } else {
-            // found the node 
-            if (node.leftChild === null && node.rightChild === null) {
-                return null;
-            }
-            // case 2 of one child - replace with its child
-           if (node.leftChild === null && node.rightChild !== null) {
-                return node.rightChild;
-           } else if (node.rightChild === null) {
-                return node.leftChild;
-            }
+    // Recur down the tree
+    if (value < node.data) {
+        node.leftChild = this.deleteItem(value, node.leftChild); // Recur to the left subtree
+    } else if (value > node.data) {
+        node.rightChild = this.deleteItem(value, node.rightChild); // Recur to the right subtree
+    } else {
+        // Node to be deleted found
 
-            // case 3 of two children - replace with next largest (right > left > left > left...)
-            if (node.rightChild !== null && node.leftChild !== null) {
-                let current = node;
-                current = node.rightChild;
-                while(current.leftChild !== null) {
-                    current = current.leftChild;
-                }
-                node.data = current.data;
-                return node;
-            }
+        // Case 1: Node has no children (leaf node)
+        if (node.leftChild === null && node.rightChild === null) {
+            return null; // Simply remove the node by returning null
+        }
+
+        // Case 2: Node has one child
+        if (node.leftChild === null) {
+            return node.rightChild; // Replace node with its right child
+        } else if (node.rightChild === null) {
+            return node.leftChild; // Replace node with its left child
+        }
+
+        // Case 3: Node has two children
+        // Find the in-order successor (smallest in the right subtree)
+        let successor = this.findMinNode(node.rightChild);
+        node.data = successor.data; // Copy the successor's data to the node
+
+        // Delete the in-order successor
+        node.rightChild = this.deleteItem(successor.data, node.rightChild);
     }
+    return node; // Return the updated node
 }
+
+// Helper method to find the minimum value node in a tree
+findMinNode(node) {
+    let current = node;
+    while (current.leftChild !== null) {
+        current = current.leftChild; // Move to the leftmost node
+    }
+    return current;
+    }
+
+find(value, node = this.root) {
+    if (node === null) {
+        return node;
+    } else if (value < node) {
+        return this.find(value, node.leftChild)
+    } else if (value > node) {
+        return this.find(value, node.rightChild)
+    } else {
+    return node
+}}
+
+levelOrder(callback, node = this.root) {
+    if (node === null) {
+        return node;
+    } else
+
 }
+
+}
+
 
 // let test = new Tree([0,1,2,3,4,5,6]);
 // test.buildTree(test.array);
