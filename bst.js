@@ -201,6 +201,24 @@ preOrder(callback) {
     traverse(this.root);
     console.log(queue);
 }
+
+postOrder(callback) {
+    if (this.root === null) {
+        return
+    }
+
+    let queue = [];
+
+    function traverse(node) {
+        if (node.leftChild) {traverse(node.leftChild)};
+        if (node.rightChild) {traverse(node.rightChild)};
+        queue.push(node.data);
+        callback(node);
+    }
+
+    traverse(this.root);
+    console.log(queue);
+}
 }
 
 
@@ -217,3 +235,4 @@ console.log(test2);
 test2.levelOrder(node => {console.log(node.data)});
 test2.inOrder(node => {console.log(node.data)});
 test2.preOrder(node => {console.log(node.data)});
+test2.postOrder(node => {console.log(node.data)});
