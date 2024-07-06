@@ -219,6 +219,30 @@ postOrder(callback) {
     traverse(this.root);
     console.log(queue);
 }
+
+height(node) {
+    // arrive at the node
+    let data = this.find(node, this.root);
+    
+    // initialise height
+    let height = 0;
+
+    function stepDown(data) {
+        if (data.leftChild) {
+            height++;
+            stepDown(data.leftChild);
+
+        if (data.rightChild) {
+            height++;
+            stepDown(data.rightChild)}
+        
+        console.log(height);
+        return height;
+    }}
+
+    stepDown(data);
+}
+
 }
 
 
@@ -236,3 +260,4 @@ test2.levelOrder(node => {console.log(node.data)});
 test2.inOrder(node => {console.log(node.data)});
 test2.preOrder(node => {console.log(node.data)});
 test2.postOrder(node => {console.log(node.data)});
+test2.height(3)
