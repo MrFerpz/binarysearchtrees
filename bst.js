@@ -142,14 +142,49 @@ find(value, node = this.root) {
     return node
 }}
 
-levelOrder(callback, node = this.root) {
-    if (node === null) {
-        return node;
-    } else
+levelOrder(callback) {
+    // obv if nothing there then return
+    if (this.root === null) {
+        return;
+    }
+    // first item of the queue is gonna be the root node
+    let queue = [this.root];
 
+    while (queue.length > 0) {
+        // shift removes and returns first element so is ideal to handle queues
+        let current = queue.shift();
+        
+        // do something with the current value like console.log its data
+        callback(current);
+
+        if (current.leftChild !== null) {
+            queue.push(current.leftChild);
+        }
+        if (current.rightChild !== null) {
+            queue.push(current.rightChild);
+        }
+     }
+    }
+
+inOrder(callback) {
+    if (this.root === null) {
+        return
+    }
+
+    let queue = [];
+
+    function traverse(node) {
+        if (node.leftChild) {traverse(node.leftChild)};
+        queue.push(node.data);
+        callback(node.data);
+        if (node.rightChild) {traverse(node.rightChild)};
+    }
+
+    traverse(this.root);
+    console.log(queue);
+}
 }
 
-}
 
 
 // let test = new Tree([0,1,2,3,4,5,6]);
@@ -161,3 +196,5 @@ test2.insert(6);
 console.log(test2);
 test2.deleteItem(6);
 console.log(test2);
+test2.levelOrder(node => {console.log(node.data)});
+test2.inOrder();
