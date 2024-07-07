@@ -139,7 +139,7 @@ find(value, node = this.root) {
     } else if (value > node.data) {
         return this.find(value, node.rightChild)
     } else {
-    return node
+    return node;
 }}
 
 levelOrder(callback) {
@@ -260,6 +260,36 @@ depth(value, node = this.root, nodeDepth = 0) {
         return nodeDepth;
     }
 }
+
+isBalanced() {
+    // initialise a collection of all the nodes we need to check
+    let nodeArray = [];
+
+    for (let i = 0; i < this.array.length; i++) {
+        // add to the node array by finding each node
+    nodeArray.push(this.find(this.array[i]));
+    }
+
+    console.log(nodeArray[0]);
+
+    // run a check function on all of the nodes to see how many children
+    for (let i = 0; i < nodeArray.length; i++) {
+        console.log(i);
+        console.log(checkBalance(nodeArray[i]));
+    }
+
+    function checkBalance(node) {
+        if (node.leftChild === null && node.rightChild === null) {
+            return true
+        } if ((node.leftChild) && (node.leftChild.leftChild) && (node.rightChild === null)) {
+            console.log("Unbalanced tree");
+            return false
+        } else if ((node.rightChild) && (node.rightChild.rightChild) && (node.leftChild === null)) {
+            console.log("Unbalanced tree");
+            return false
+        } else return true
+    }
+}
 }
 
 
@@ -278,5 +308,7 @@ test2.deleteItem(6);
 // test2.preOrder(node => {console.log(node.data)});
 // test2.postOrder(node => {console.log(node.data)});
 // console.log(test2);
-// test2.height(9);
+test2.height(9);
+test2.find(9);
 test2.depth(9);
+test2.isBalanced();
