@@ -274,23 +274,25 @@ isBalanced() {
 
     // run a check function on all of the nodes to see how many children
     for (let i = 0; i < nodeArray.length; i++) {
-        console.log(i);
-        console.log(checkBalance(nodeArray[i]));
+        if ((checkBalance(nodeArray[i])) === false) {
+            console.log("Unbalanced tree")
+        }
     }
 
     function checkBalance(node) {
-        if (node.leftChild === null && node.rightChild === null) {
-            return true
-        } if ((node.leftChild) && (node.leftChild.leftChild) && (node.rightChild === null)) {
-            console.log("Unbalanced tree");
+        if (node === null) {
+            return true;
+        }
+
+        // setting up the conditions; if a node has 2 children on one side and 0 on the other, it's unbalanced
+        if ((node.leftChild) && (node.leftChild.leftChild) && (node.rightChild === null)) {
             return false
         } else if ((node.rightChild) && (node.rightChild.rightChild) && (node.leftChild === null)) {
-            console.log("Unbalanced tree");
             return false
         } else return true
     }
-}
-}
+}}
+
 
 
 
