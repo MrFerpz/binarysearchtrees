@@ -182,6 +182,7 @@ inOrder(callback) {
 
     traverse(this.root);
     console.log(queue);
+    return queue;
 }
 
 preOrder(callback) {
@@ -291,8 +292,16 @@ isBalanced() {
             return false
         } else return true
     }
-}}
+}
 
+rebalance(tree) {
+    // first check if tree is already balanced
+    if (tree.isBalanced()) {
+        return tree
+    }
+    return this.buildTree(this.inOrder(node => {console.log(node.data)}))
+}
+}
 
 
 
@@ -304,13 +313,14 @@ test2.initialiseTree();
 test2.insert(6);
 console.log(test2);
 test2.deleteItem(6);
-// console.log(test2);
-// test2.levelOrder(node => {console.log(node.data)});
-// test2.inOrder(node => {console.log(node.data)});
-// test2.preOrder(node => {console.log(node.data)});
-// test2.postOrder(node => {console.log(node.data)});
-// console.log(test2);
+console.log(test2);
+test2.levelOrder(node => {console.log(node.data)});
+test2.inOrder(node => {console.log(node.data)});
+test2.preOrder(node => {console.log(node.data)});
+test2.postOrder(node => {console.log(node.data)});
+console.log(test2);
 test2.height(9);
 test2.find(9);
 test2.depth(9);
 test2.isBalanced();
+console.log(test2.rebalance(test2));
