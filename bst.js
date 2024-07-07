@@ -223,32 +223,43 @@ postOrder(callback) {
 height(node) {
     // arrive at the node
     let data = this.find(node, this.root);
-    console.log(data);
-    return data;
+
+    // if you choose a leaf
+    if (data.rightChild === null && data.leftChild === null) {
+        console.log(0);
+        return 
+    }
     
     // initialise height
-    let height = 0;
-
     function stepDown(data) {
-        if (data.leftChild) {
-            data.leftChild.parent = data;
-            stepDown(data.leftChild);
-
-        if (data.rightChild) {
-            data.rightChild.parent = data;
-            stepDown(data.rightChild)}
-        
-        while (data.parent) {
-            data = data.parent;
-            height++
-        }
+        let height = 0;
+       if (data.leftChild) {height++; stepDown(data.leftChild)};
+       if (data.rightChild) {height++; stepDown(data.rightChild)};
         console.log(height);
         return height;
-    }}
+    }
 
     stepDown(data);
 }
 
+depth(value, node = this.root, nodeDepth = 0) {
+    // initialise depth at the root
+
+    // check if it exists lol
+    if (node === null) {
+        return;
+        // if it's lower, go left
+    } else if (value < node.data) {
+        return this.depth(value, node.leftChild, nodeDepth + 1);
+        // if it's higher, go right
+    } else if (value > node.data) {
+        return this.depth(value, node.rightChild, nodeDepth + 1);
+    } else {
+        // once you find the right node
+        console.log(nodeDepth);
+        return nodeDepth;
+    }
+}
 }
 
 
@@ -261,10 +272,11 @@ test2.initialiseTree();
 test2.insert(6);
 console.log(test2);
 test2.deleteItem(6);
-console.log(test2);
-test2.levelOrder(node => {console.log(node.data)});
-test2.inOrder(node => {console.log(node.data)});
-test2.preOrder(node => {console.log(node.data)});
-test2.postOrder(node => {console.log(node.data)});
-console.log(test2);
-test2.height(3);
+// console.log(test2);
+// test2.levelOrder(node => {console.log(node.data)});
+// test2.inOrder(node => {console.log(node.data)});
+// test2.preOrder(node => {console.log(node.data)});
+// test2.postOrder(node => {console.log(node.data)});
+// console.log(test2);
+// test2.height(9);
+test2.depth(9);
