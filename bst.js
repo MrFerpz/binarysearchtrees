@@ -134,9 +134,9 @@ findMinNode(node) {
 find(value, node = this.root) {
     if (node === null) {
         return node;
-    } else if (value < node) {
+    } else if (value < node.data) {
         return this.find(value, node.leftChild)
-    } else if (value > node) {
+    } else if (value > node.data) {
         return this.find(value, node.rightChild)
     } else {
     return node
@@ -223,19 +223,25 @@ postOrder(callback) {
 height(node) {
     // arrive at the node
     let data = this.find(node, this.root);
+    console.log(data);
+    return data;
     
     // initialise height
     let height = 0;
 
     function stepDown(data) {
         if (data.leftChild) {
-            height++;
+            data.leftChild.parent = data;
             stepDown(data.leftChild);
 
         if (data.rightChild) {
-            height++;
+            data.rightChild.parent = data;
             stepDown(data.rightChild)}
         
+        while (data.parent) {
+            data = data.parent;
+            height++
+        }
         console.log(height);
         return height;
     }}
@@ -260,4 +266,5 @@ test2.levelOrder(node => {console.log(node.data)});
 test2.inOrder(node => {console.log(node.data)});
 test2.preOrder(node => {console.log(node.data)});
 test2.postOrder(node => {console.log(node.data)});
-test2.height(3)
+console.log(test2);
+test2.height(3);
